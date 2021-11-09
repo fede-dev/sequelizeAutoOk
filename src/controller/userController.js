@@ -9,7 +9,7 @@ const userController = {
             res.status(404).json("Not found " + error.message)
         }
     },
-    createUser: async()=> {
+    createUser: async(req, res, next)=> {
         try{
             const newUser = await userModel.getCreateUser(req.body)
             res.status(200).json(newUser)
@@ -17,7 +17,7 @@ const userController = {
             res.status(404).json("Not found " + error.message)
         }
     },
-    updateUser: async()=> {
+    updateUser: async(req, res, next)=> {
         try{
             const updateUser = await userModel.getUpdateUser(req.params.id, req.body)
             res.status(200).json(updateUser)
@@ -25,9 +25,9 @@ const userController = {
             res.status(404).json("Not found " + error.message)
         }
     },
-    deleteUser: async()=>{
+    deleteUser: async(req, res, next)=>{
         try{
-            const deleteUser = await userModel.getDeleteModel(req.params.id)
+            const deleteUser = await userModel.getDeleteUser(req.params.id)
             res.status(200).json(deleteUser)
         }catch(error){
             res.status(404).json("Not found " + error.message)
