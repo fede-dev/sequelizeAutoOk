@@ -1,9 +1,9 @@
-const userModel = require("../model")
+const {userModel }= require("../model")
 
 const userController = {
     allUsers: async(req, res, next)=> {
         try{
-            const allusers = await userModel.getAllUsers()
+            const allusers = await userModel.getAllUser()
             res.status(200).json(allusers)
         }catch(error){
             res.status(404).json("Not found " + error.message)
