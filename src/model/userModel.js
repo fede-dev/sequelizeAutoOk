@@ -1,26 +1,39 @@
 const db = require('../database/models')
-const { Op } = require("sequelize")
+const bcrypt = require("bcrypt")
+
 
 const userModel = {
   getAllUser: async function () {
     return await db.test.findAll()
   },
   getCreateUser: async function (user) {
-    return db.test.create(user)
+    let password = bcrypt.hashSync(user.password, 10)
+    let createUser = {
+      name: user.name,
+      lastName: user.lastName,
+      email: user.email,
+      password: password
+    }
+    return await db.test.create(createUser)
+  },
+
+  getLoginUser: async function (email, password) {
+    return await db.test.create(user)
   },
   getUpdateUser: async function (id, user) {
     try {
       const datos = await this.getAllUser();
       const findId = datos.find(item => item.id == id)
       const updateUser = await db.test.update(
-        { name: user.name,
+        {
+          name: user.name,
           lastName: user.lastName,
           email: user.email,
           password: user.password
-         },
+        },
         {
           where:
-            { id: findId.dataValues.id}
+            { id: findId.dataValues.id }
         }
       )
       return updateUser.dataValues
@@ -45,3 +58,6 @@ const userModel = {
   }
 };
 module.exports = userModel
+
+
+//command a kf
