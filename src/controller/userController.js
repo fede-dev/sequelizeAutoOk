@@ -20,16 +20,7 @@ const userController = {
             res.status(404).json("Not found " + error)
         }
     },
-    loginUser: async (req, res, next) => {
-        try {
-            const email = req.body.email
-            const password = req.body.password
-            const loginUser = await userModel.getLoginUser(email, password)
-            res.status(200).json(loginUser)
-        } catch (error) {
-            res.status(404).json("Not found " + error.message)
-        }
-    },
+
     updateUser: async (req, res, next) => {
         try {
             const updateUser = await userModel.getUpdateUser(req.params.id, req.body)
@@ -45,6 +36,9 @@ const userController = {
         } catch (error) {
             res.status(404).json("Not found " + error.message)
         }
+    },
+    profileRoute: (req, res, next)=>{ 
+        res.status(200).json({msg: "Bienvenido"})
     }
 }
 

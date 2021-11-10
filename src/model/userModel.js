@@ -1,4 +1,5 @@
 const db = require('../database/models')
+const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 
 
@@ -16,9 +17,13 @@ const userModel = {
     }
     return await db.test.create(createUser)
   },
-
   getLoginUser: async function (email, password) {
-    return await db.test.create(user)
+    if(bcrypt.compareSync(password, password)){
+      let token = await jwt.sign({email: email, password:password}, 'secretkey', {expiresIn: "1h"})
+      return token
+    }else{
+      console.log("Error")
+    }
   },
   getUpdateUser: async function (id, user) {
     try {
