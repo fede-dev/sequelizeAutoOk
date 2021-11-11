@@ -1,6 +1,4 @@
 const { userModel } = require("../model")
-const bcrypt = require("bcrypt")
-const jwt = require("jsonwebtoken")
 
 const userController = {
     allUsers: async (req, res, next) => {
@@ -13,9 +11,17 @@ const userController = {
     },
     createUser: async (req, res, next) => {
         try {
-         const user = req.body
-         const response = await userModel.getCreateUser(user)
-         res.status(200).json(response)
+            const user = req.body
+            const response = await userModel.getCreateUser(user)
+            return res.redirect("/api/users/ingresar")
+            
+        } catch (error) {
+            res.status(404).json("Not found " + error)
+        }
+    },
+    visualUser: async (req, res, next) => {
+        try {
+            res.render("index")
         } catch (error) {
             res.status(404).json("Not found " + error)
         }
@@ -37,8 +43,12 @@ const userController = {
             res.status(404).json("Not found " + error.message)
         }
     },
-    profileRoute: (req, res, next)=>{ 
-        res.status(200).json({msg: "Bienvenido"})
+    profileRoute: (req, res, next) => {
+        res.status(200).json({ msg: "Bienvenido" })
+    },
+    visualProfileRoute: (req, res, next) => {
+    return res.status(200).json({ msg: "Profile" })
+       
     }
 }
 

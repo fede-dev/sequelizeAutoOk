@@ -1,12 +1,15 @@
 const db = require('../database/models')
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
+const fs = require("fs")
+const path = require("path")
 
 
 const userModel = {
   getAllUser: async function () {
     return await db.test.findAll()
   },
+  
   getCreateUser: async function (user) {
     let password = bcrypt.hashSync(user.password, 10)
     let createUser = {
@@ -16,6 +19,7 @@ const userModel = {
       password: password
     }
     return await db.test.create(createUser)
+   
   },
   getLoginUser: async function (email, password) {
     const allUser = await this.getAllUser()
