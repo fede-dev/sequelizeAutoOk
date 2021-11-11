@@ -18,11 +18,16 @@ const userModel = {
     return await db.test.create(createUser)
   },
   getLoginUser: async function (email, password) {
-    if(bcrypt.compareSync(password, password)){
-      let token = await jwt.sign({email: email, password:password}, 'secretkey', {expiresIn: "1h"})
-      return token
-    }else{
-      console.log("Error")
+    const allUser = await this.getAllUser()
+    const findEmailUser = await allUser.find(item => item.email == email)
+    if (findEmailUser.dataValues.email) {
+        if (bcrypt.compareSync(password, findEmailUser.dataValues.password)) {
+          let token = await jwt.sign({ email: email, password: password }, 'secretkey', { expiresIn: "1h" })
+          return token
+        } else {
+          console.log("Error")
+        }
+     
     }
   },
   getUpdateUser: async function (id, user) {
